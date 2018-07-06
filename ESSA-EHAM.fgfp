@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+	<source type="string">https://flightplandatabase.com/plan/1149005</source>
+	<version type="int">2</version>
+	<departure>
+		<airport type="string">ESSA</airport>
+	</departure>
+	<destination>
+		<airport type="string">EHAM</airport>
+	</destination>
+	<route>
+		<wp n="0">
+			<type type="string">navaid</type>
+			<departure type="bool">true</departure>
+			<ident type="string">ESSA</ident>
+			<lat type="double">59.650140</lat>
+			<lon type="double">17.943628</lon>
+		</wp>
+		<wp n="1">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">13900</altitude-ft>
+			<ident type="string">DKR</ident>
+			<lat type="double">59.207167</lat>
+			<lon type="double">17.012083</lon>
+		</wp>
+		<wp n="2">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">ELPAX</ident>
+			<lat type="double">58.095472</lat>
+			<lon type="double">15.273361</lon>
+		</wp>
+		<wp n="3">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">TOKSI</ident>
+			<lat type="double">57.155583</lat>
+			<lon type="double">13.911028</lon>
+		</wp>
+		<wp n="4">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">MISMA</ident>
+			<lat type="double">56.641250</lat>
+			<lon type="double">13.202806</lon>
+		</wp>
+		<wp n="5">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">SVD</ident>
+			<lat type="double">56.168861</lat>
+			<lon type="double">12.573778</lon>
+		</wp>
+		<wp n="6">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">KOPIM</ident>
+			<lat type="double">56.133889</lat>
+			<lon type="double">12.498333</lon>
+		</wp>
+		<wp n="7">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">LASGI</ident>
+			<lat type="double">56.113333</lat>
+			<lon type="double">12.454444</lon>
+		</wp>
+		<wp n="8">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">NAROL</ident>
+			<lat type="double">56.005833</lat>
+			<lon type="double">12.225000</lon>
+		</wp>
+		<wp n="9">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">DOBEL</ident>
+			<lat type="double">55.606078</lat>
+			<lon type="double">11.389931</lon>
+		</wp>
+		<wp n="10">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">ALS</ident>
+			<lat type="double">54.905414</lat>
+			<lon type="double">9.993378</lon>
+		</wp>
+		<wp n="11">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">DEMIR</ident>
+			<lat type="double">54.836389</lat>
+			<lon type="double">9.852778</lon>
+		</wp>
+		<wp n="12">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">35000</altitude-ft>
+			<ident type="string">GOLEN</ident>
+			<lat type="double">54.059722</lat>
+			<lon type="double">8.320833</lon>
+		</wp>
+		<wp n="13">
+			<type type="string">navaid</type>
+			<alt-restrict type="string">at</alt-restrict>
+			<altitude-ft type="double">21700</altitude-ft>
+			<ident type="string">KUBAT</ident>
+			<lat type="double">53.336389</lat>
+			<lon type="double">6.993611</lon>
+		</wp>
+		<wp n="14">
+			<type type="string">navaid</type>
+			<arrival type="bool">true</arrival>
+			<ident type="string">EHAM</ident>
+			<lat type="double">52.314850</lat>
+			<lon type="double">4.758121</lon>
+		</wp>
+	</route>
+</PropertyList>
