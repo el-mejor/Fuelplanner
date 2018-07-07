@@ -110,6 +110,9 @@ function interpretRte(rtesrc)
 
 	for (var i = 1; i< xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length; i++)
 	{
+		if(!xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lat")[0] || !xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("lat")[0])
+		{ continue; }
+		
 		leg = getDistanceFromLatLonInKm(
 			xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lat")[0].textContent, 
 			xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lon")[0].textContent, 
@@ -135,8 +138,16 @@ function interpretRte(rtesrc)
 			"<td>" + Math.floor(dist / 1.852) + " nm</td></tr>";
 	}
 
+	var skip = 0;
+	
 	for (var i = 1; i< xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length; i++)
 	{
+		if(!xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lat")[0] || !xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("lat")[0])
+		{
+			skip += 1;
+			continue; 
+		}
+		
 		var tempx = getDistanceFromLatLonInKm(
 			xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("lat")[0].textContent, 
 			0, 
@@ -159,19 +170,20 @@ function interpretRte(rtesrc)
 			tempx = -tempx;
 		}
 
+		waypointsX.push(tempy + waypointsX[i-1-skip]);	
 
-		waypointsX.push(tempy + waypointsX[i-1]);	
-
-		waypointsY.push(tempx + waypointsY[i-1]);
+		waypointsY.push(tempx + waypointsY[i-1-skip]);
 
 		waypointsName.push(xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("ident")[0].textContent);		
 	}
 
+	waypointsName[0] = origin; waypointsName[waypointsName.length - 1] = dest;
+	
 	var i = xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length - 1;
 	document.getElementById("rteoutput").innerHTML = "<p>Route has been imported: <span style='color:magenta'>[" + filename +"]</span></p>";
-	document.getElementById("rteoutput").innerHTML += "<p><b><img class='dep' /> " + xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[0].getElementsByTagName("ident")[0].textContent + "</b> <img class='arrow' /> " +
+	document.getElementById("rteoutput").innerHTML += "<p><b><img class='dep' /> " + origin + "</b> <img class='arrow' /> " +
 		Math.floor(dist / 1.852) + " NM <img class='arrow' /> " +
-		"<b>" + xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("ident")[0].textContent + " <img class='arr' /></b></p> ";
+		"<b>" + dest + " <img class='arr' /></b></p> ";
 
 	document.getElementById("dist").value = Math.floor(dist / 1.852);
 	document.getElementById("dist").classList.replace("usrval", "outval");
@@ -183,7 +195,12 @@ function interpretRte(rtesrc)
 	document.getElementById("metar").innerHTML = "<div class='checkwx-container' id='metarorig' data-type='METAR' data-station='" + origin + "'></div>";
 	document.getElementById("metar").innerHTML += "<div class='checkwx-container' id='metardest'  data-type='METAR' data-station='" + dest + "'></div>";
 	
-	drawSVGRoute(xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[0].getElementsByTagName("lat")[0].textContent, xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[0].getElementsByTagName("lon")[0].textContent);
+	var firstwp = 0;
+	
+	if(!xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[0].getElementsByTagName("lat")[0])
+	{ firstwp = 1; }
+	
+	drawSVGRoute(xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[firstwp].getElementsByTagName("lat")[0].textContent, xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[firstwp].getElementsByTagName("lon")[0].textContent);
 	calcWeights();
 }
 
