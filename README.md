@@ -3,6 +3,8 @@ A js/html standalone/offline* fuelplanner with Flightgear FS interface to set/ca
 
 a320fuelcalc.html in the root directory is an completely integrated html file. So you don't have to mess around with additional css and js files. Currently this html is to be used for the FGFS IDX-A32x but the sources (e.g. inita320.js) can adapted to fit all the other aircrafts too.
 
+Checkout the projects wiki for a short tutorial!
+
 Use the makemonolith.exe to make an integrated html file: 
 makemonolith a320fuelcalc.html inita320.js 
 This will create the file a320fuelcalc.html and is using the init values of inita320.js. 
