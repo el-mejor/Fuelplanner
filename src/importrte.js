@@ -108,10 +108,15 @@ function interpretRte(rtesrc)
 		"<td>0 nm</td>" + 
 		"<td>0 nm</td></tr>";
 
+	var skip = 0;
+		
 	for (var i = 1; i< xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length; i++)
 	{
 		if(!xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lat")[0] || !xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("lat")[0])
-		{ continue; }
+		{
+			skip += 1;
+			continue; 
+		}
 		
 		leg = getDistanceFromLatLonInKm(
 			xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i - 1].getElementsByTagName("lat")[0].textContent, 
@@ -133,12 +138,12 @@ function interpretRte(rtesrc)
 			img = "arr";
 		}
 
-		document.getElementById("rtetable").innerHTML += "<tr class='rtehover wpt" + i + "' id='wpt" + i + "'><td style='border-right:1px solid dimgray;text-align:center'><img class='" + img + "' /></td><td><b>" + xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("ident")[0].textContent + "</b></td>" + 
+		document.getElementById("rtetable").innerHTML += "<tr class='rtehover wpt" + (i-skip) + "' id='wpt" + (i-skip) + "'><td style='border-right:1px solid dimgray;text-align:center'><img class='" + img + "' /></td><td><b>" + xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("ident")[0].textContent + "</b></td>" + 
 			"<td>" + Math.floor(leg / 1.852) + " nm</td>" + 
 			"<td>" + Math.floor(dist / 1.852) + " nm</td></tr>";
 	}
 
-	var skip = 0;
+	skip = 0;
 	
 	for (var i = 1; i< xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length; i++)
 	{
@@ -177,7 +182,7 @@ function interpretRte(rtesrc)
 		waypointsName.push(xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp")[i].getElementsByTagName("ident")[0].textContent);		
 	}
 
-	waypointsName[0] = origin; waypointsName[waypointsName.length - 1] = dest;
+	/*waypointsName[0] = origin; waypointsName[waypointsName.length - 1] = dest;*/
 	
 	var i = xmlDoc.getElementsByTagName("route")[0].getElementsByTagName("wp").length - 1;
 	document.getElementById("rteoutput").innerHTML = "<p>Route has been imported: <span style='color:magenta'>[" + filename +"]</span></p>";
