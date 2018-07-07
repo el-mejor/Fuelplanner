@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">LIRN</airport>
+    <runway type="string">24</runway>
+  </departure>
+  <destination>
+    <airport type="string">LFKC</airport>
+    <runway type="string">18</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">24</ident>
+      <icao type="string">LIRN</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">navaid</type>
+      <ident type="string">GEMMA</ident>
+      <lon type="double">14.286111</lon>
+      <lat type="double">40.710556</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">34200</altitude-ft>
+      <ident type="string">OST</ident>
+      <lon type="double">12.237496</lon>
+      <lat type="double">41.803876</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">25300</altitude-ft>
+      <ident type="string">MEDAL</ident>
+      <lon type="double">11.376389</lon>
+      <lat type="double">42.052778</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">19300</altitude-ft>
+      <ident type="string">ROTIR</ident>
+      <lon type="double">10.785833</lon>
+      <lat type="double">42.219167</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">CAPCO</ident>
+      <lon type="double">9.5745</lon>
+      <lat type="double">42.847306</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">NORKA</ident>
+      <lon type="double">8.791389</lon>
+      <lat type="double">42.953056</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <ident type="string">SOUKA</ident>
+      <lon type="double">8.791944</lon>
+      <lat type="double">42.889722</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">ILROU</ident>
+      <lon type="double">8.792139</lon>
+      <lat type="double">42.705333</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">18</ident>
+      <icao type="string">LFKC</icao>
+    </wp>
+  </route>
+</PropertyList>
