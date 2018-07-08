@@ -3,7 +3,7 @@ A js/html standalone/offline* fuelplanner with Flightgear FS interface to set/ca
 
 **Quick start:**
 
-a320fuelcalc.html in the root directory is an completely integrated html file. So you don't have to mess around with additional css and js files. Currently this html is to be used for the FGFS IDX-A32x Airbus A320.
+a320fuelcalc.html in the root directory is an completely integrated html file. So you don't have to mess around with additional css and js files. Currently this html is to be used for the FGFS IDX-A32x Airbus A320. Save the html local or on a (offline) webserver you can reach with your devices and open it.
 
 Checkout the projects wiki for a short tutorial!
 
