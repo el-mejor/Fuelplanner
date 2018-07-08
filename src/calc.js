@@ -1,4 +1,4 @@
-var vals = ["ew", "crew", "pax", "fwdcrg", "aftcrg", "lwt", "lwtmax", "rwt", "rwtmax", "ctr", "ctrmax", "fobmax", "towmax", "lwmax", "fob", "tow", "lw", "zfw", "fb360", "fb360x"];
+var vals = ["ew", "crew", "pax", "fwdcrg", "aftcrg", "fob", "fobmax", "towmax", "lwmax", "tow", "lw", "zfw", "fb360", "fb360x"];
 var valstab = ["clbfuel", "crs1fuel", "crs2fuel", "crs3fuel", "crs11fuel", "crs22fuel", "crs33fuel", "todfuel", "fltfuel", "outconti", "outtaxi", "outresfuel", "outadd", "blockfuel"];
 var lbskg = 0.453592;
 	
@@ -141,7 +141,7 @@ function emptyLoad()
 }
 
 
-function calcKg (sender) 
+function calcKg(sender) 
 {
 	document.getElementById(sender + "kg").value = Math.floor(parseInt(document.getElementById(sender).value) * lbskg);					
 }
@@ -151,6 +151,18 @@ function calcKgAll ()
 	for (i = 0; i < vals.length; i++)
 	{
 		calcKg(vals[i]);
+	}
+	
+	for (i = 0; i < WingTanksNames.length; i++)
+	{
+		calcKg(WingTanksNames[i]);
+		calcKg(WingTanksNames[i] + "max");
+	}
+	
+	for (i = 0; i < CenteredTanksNames.length; i++)
+	{
+		calcKg(CenteredTanksNames[i]);
+		calcKg(CenteredTanksNames[i] + "max");
 	}
 
 	for (i = 0; i < valstab.length; i++)
@@ -197,29 +209,28 @@ function calcWeightsEx()
 	document.getElementById("zfw").value = zfw;
 
     calcFuel();
+	
+	var fobmax = sumTanksToFOBMax();
+	var fob = 0;
+	
+	for (var i = 0; i < WingTanksNames.length; i ++)
+	{ 
+		document.getElementById(WingTanksNames[i]).value = Math.floor(block / fobmax * WingTanksMax[i]);
+		fob += Math.floor(block / fobmax * WingTanksMax[i]);
+	}
+	for (var i = 0; i < CenteredTanksNames.length; i ++)
+	{ 
+		document.getElementById(CenteredTanksNames[i]).value = Math.floor(block / fobmax * CenteredTanksMax[i]);
+		fob += Math.floor(block / fobmax * CenteredTanksMax[i]);
+	}
 
-		
-	var fobmax = parseInt(document.getElementById("fobmax").value)
-	var rwtmax = parseInt(document.getElementById("rwtmax").value)
-	var lwtmax = parseInt(document.getElementById("lwtmax").value)
-	var ctrmax = parseInt(document.getElementById("ctrmax").value)
-						
-		
+	document.getElementById("fob").value = fob;
 
-	document.getElementById("rwt").value = Math.floor(block / fobmax * rwtmax);
-	document.getElementById("lwt").value = Math.floor(block / fobmax * lwtmax);
-	document.getElementById("ctr").value = Math.floor(block / fobmax * ctrmax);
-
-	document.getElementById("fob").value = parseInt(document.getElementById("rwt").value) + 
-	parseInt(document.getElementById("lwt").value) + 
-	parseInt(document.getElementById("ctr").value);
-
-	document.getElementById("tow").value = parseInt(document.getElementById("zfw").value) + 
-	parseInt(document.getElementById("fob").value);
+	document.getElementById("tow").value = parseInt(document.getElementById("zfw").value) + fob;
 
 	document.getElementById("lw").value = Math.floor(parseInt(document.getElementById("tow").value) - fltfuel);
 		
-	if (fillmode == "fillouter")
+	/*if (fillmode == "fillouter")
 	{			
 		var outfree = 2 * (rwtmax - Math.floor(block / fobmax * rwtmax));
 		if (Math.floor(block / fobmax * ctrmax) >= outfree)
@@ -233,10 +244,10 @@ function calcWeightsEx()
 		}
 		document.getElementById("rwt").value = Math.floor(block / fobmax * rwtmax + outfree / 2);
 		document.getElementById("lwt").value = Math.floor(block / fobmax * lwtmax + outfree / 2);
-	}
+	}*/
 		
 	/*fuel compartment diagram*/
-
+	/*
 	profildiagsizex = document.getElementById("svgtank").getBoundingClientRect().width * 0.8;
 	profildiagsizey = Math.floor(profildiagsizex / 3);
 
@@ -262,7 +273,7 @@ function calcWeightsEx()
 		"<text x='0' y='40' class='diagtext' dx='5' dy='12px'>" + 
 		"<tspan>RWT</tspan>" + 
 		"</text>";	
-
+	*/
 	calcKgAll();
 
 	checkErr();

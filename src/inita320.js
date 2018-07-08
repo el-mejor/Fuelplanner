@@ -16,13 +16,18 @@ document.getElementById("paxweight").value = 82; /*weight of one pax in kg*/
 document.getElementById("fwdcrg").value = 3306; /*default cargo in the forward cargo bay*/
 document.getElementById("aftcrg").value = 3306; /*default cargo in the aft cargo bay*/
 
-document.getElementById("rwt").value = 0; /*initialy the tanks must be empty!*/
-document.getElementById("lwt").value = 0; /*initialy the tanks must be  empty!*/
-document.getElementById("ctr").value = 0; /*initialy the tanks must be  empty!*/
-document.getElementById("rwtmax").value = 13914; /*max fuel in the right wing tank*/
-document.getElementById("lwtmax").value = 13914; /*max fuel in the left wing tank*/
-document.getElementById("ctrmax").value = 14281; /*max fuel in the center tank*/
-document.getElementById("fobmax").value = 42109; /*max fuel at all*/
+/* Fuel compartments */
+var WingTanksNames = [ "RightWT", "LeftWT"];
+var WingTanksNodes = [ "consumables/fuel/tank[0]/level-lbs", "consumables/fuel/tank[2]/level-lbs" ];
+var WingTanksValue = [ 0, 0];
+var WingTanksMax = [ 13914, 13914];
+
+var CenteredTanksNames = [ "CtrT" ];
+var CenteredTanksNodes = [ "consumables/fuel/tank[1]/level-lbs" ];
+var CenteredTanksValue = [ 0 ];
+var CenteredTanksMax = [ 14281 ];
+
+initFuelCompartments();
 
 document.getElementById("towmax").value = 169756; /*maximum take off weight*/
 document.getElementById("lwmax").value = 142198; /*maximum landing weight*/
@@ -49,6 +54,43 @@ document.getElementById("addfl").value = 0; /*default value for additional fuel*
 document.getElementById("setFuelBtn").addEventListener("click", setFuelBtnClick);
 document.getElementById("setPayloadBtn").addEventListener("click", setPayloadBtnClick);
 
+function sumTanksToFOB()
+{
+	var fob = 0;
+	for (var i = 0; i < WingTanksMax.Length; i ++)
+	{ fob += WingTanksMax[i]; }
+	for (var i = 0; i < CenteredTanksMax.Length; i ++)
+	{ fob += CenteredTanksMax[i]; }
+
+	return fob;
+}
+
+function initFuelCompartments()
+{
+	for (var i = 0; i < WingTanksName.Length; i ++)
+	{ 
+		document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="$(WingTanksName[i])" class="outval">lbs</td><td> <input type="number" id="$(WingTanksName[i])kg" class="statval">kg</td></tr>´;
+		document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="$(WingTanksName[i])max" class="outval">lbs</td><td> <input type="number" id="$(WingTanksName[i])maxkg" class="statval">kg</td></tr>´;
+		
+		document.getElementById(WingTanksName[i]).value = WingTanksValue[i];
+		document.getElementById(WingTanksName[i] + "max").value = WingTanksMax[i];
+	}
+	
+	for (var i = 0; i < CenteredTanksName.Length; i ++)
+	{ 
+		document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="$(CenteredTanksName[i])" class="outval">lbs</td><td> <input type="number" id="$(CenteredTanksName[i])kg" class="statval">kg</td></tr>´;
+		document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="$(CenteredTanksName[i])max" class="outval">lbs</td><td> <input type="number" id="$(CenteredTanksName[i])maxkg" class="statval">kg</td></tr>´;
+		
+		document.getElementById(CenteredTanksName[i]).value = CenteredTanksValue[i];
+		document.getElementById(CenteredTanksName[i] + "max").value = CenteredTanksMax[i];
+	}
+	
+	document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="fob" class="outval">lbs</td><td> <input type="number" id="fobkg" class="statval">kg</td></tr>´;
+	document.getElementById("fuelcompartments").innerHTML += ´<tr><td>LWingT:</td><td> <input type="number" id="fobmax" class="outval">lbs</td><td> <input type="number" id="fobmaxkg" class="statval">kg</td></tr>´;
+	
+	document.getElementById("fobmax").value = sumTanksToFOB();
+}
+
 function setPayloadBtnClick()
 {
 	if (checkIfLoadingIsPossible())
@@ -66,11 +108,9 @@ function setFuelBtnClick()
 {
 	if (checkIfLoadingIsPossible())
 	{
-		var nodesFuel = [ "consumables/fuel/tank[0]/level-lbs", "consumables/fuel/tank[1]/level-lbs", "consumables/fuel/tank[2]/level-lbs" ];
-
-		FGSetValue(nodesFuel[0], document.getElementById("rwt").value);
-		FGSetValue(nodesFuel[1], document.getElementById("ctr").value);
-		FGSetValue(nodesFuel[2], document.getElementById("lwt").value);
+		FGSetValue(WingTanksNodes[0], document.getElementById("rwt").value);
+		FGSetValue(CenteredTanksNodes[0], document.getElementById("ctr").value);
+		FGSetValue(WingTanksNodes[1], document.getElementById("lwt").value);
 	}
 }
 
