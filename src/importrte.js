@@ -404,6 +404,8 @@ function drawFlnRouteTimer(xhigh, yhigh, xsize, mapy, xlow, ylow, refx, refy)
 		document.getElementById("gendiagrte").innerHTML += drawInMap("flownRte", flownRte, xhigh, yhigh, xsize, mapy, xlow, ylow, refx, refy, strkwidth, "red", "none", "pos");
 				
 		drawFlnRouteTimer(xhigh, yhigh, xsize, mapy, xlow, ylow, refx, refy);
+		
+		enableHover();
 	}, updateTimer * 1000);
 }
 
