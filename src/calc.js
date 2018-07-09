@@ -63,7 +63,44 @@ for (i = 0; i < objs.length; i++)
 	objs[i].disabled = true;
 }	
 
+initFuelCompartments();
+
 calcWeights();
+
+function initFuelCompartments()
+{
+	var refuelTable = document.getElementById("fuelcompartments");
+	
+	for (var i = 0; i < WingTanksNames.length; i ++)
+	{ 
+		refuelTable.innerHTML += `<tr><td>${WingTanksNames[i]}:</td><td> <input type="number" id="${WingTanksNames[i]}" class="outval">lbs</td><td> <input type="number" id="${WingTanksNames[i]}kg" class="statval">kg</td></tr>`;
+		refuelTable.innerHTML += `<tr><td>${WingTanksNames[i]} Max:</td><td> <input type="number" id="${WingTanksNames[i]}max" class="outval">lbs</td><td> <input type="number" id="${WingTanksNames[i]}maxkg" class="statval">kg</td></tr>`;
+	}
+	
+	for (var i = 0; i < CenteredTanksNames.length; i ++)
+	{ 
+		refuelTable.innerHTML += `<tr><td>${CenteredTanksNames[i]}:</td><td> <input type="number" id="${CenteredTanksNames[i]}" class="outval">lbs</td><td> <input type="number" id="${CenteredTanksNames[i]}kg" class="statval">kg</td></tr>`;
+		refuelTable.innerHTML += `<tr><td>${CenteredTanksNames[i]} Max:</td><td> <input type="number" id="${CenteredTanksNames[i]}max" class="outval">lbs</td><td> <input type="number" id="${CenteredTanksNames[i]}maxkg" class="statval">kg</td></tr>`;	
+	}
+	
+	refuelTable.innerHTML += '<tr><td>FOB:</td><td> <input type="number" id="fob" class="outval">lbs</td><td> <input type="number" id="fobkg" class="statval">kg</td></tr>';
+	refuelTable.innerHTML += '<tr><td>FOB Max:</td><td> <input type="number" id="fobmax" class="outval">lbs</td><td> <input type="number" id="fobmaxkg" class="statval">kg</td></tr>';
+	
+	for (var i = 0; i < WingTanksNames.length; i ++)
+	{ 		
+		document.getElementById(WingTanksNames[i]).value = 0;
+		document.getElementById(WingTanksNames[i] + "max").value = WingTanksMax[i];
+	}
+	
+	for (var i = 0; i < CenteredTanksNames.length; i ++)
+	{ 		
+		document.getElementById(CenteredTanksNames[i]).value = 0;
+		document.getElementById(CenteredTanksNames[i] + "max").value = CenteredTanksMax[i];	
+	}
+	
+	document.getElementById("fob").value = 0;
+	document.getElementById("fobmax").value = sumTanksToFOBMax();
+}
 	
 function showHideBox()
 {
@@ -209,74 +246,115 @@ function calcWeightsEx()
 	document.getElementById("zfw").value = zfw;
 
     calcFuel();
-	
-	var fobmax = sumTanksToFOBMax();
-	var fob = 0;
-	
-	for (var i = 0; i < WingTanksNames.length; i ++)
-	{ 
-		document.getElementById(WingTanksNames[i]).value = Math.floor(block / fobmax * WingTanksMax[i]);
-		fob += Math.floor(block / fobmax * WingTanksMax[i]);
-	}
-	for (var i = 0; i < CenteredTanksNames.length; i ++)
-	{ 
-		document.getElementById(CenteredTanksNames[i]).value = Math.floor(block / fobmax * CenteredTanksMax[i]);
-		fob += Math.floor(block / fobmax * CenteredTanksMax[i]);
-	}
-
-	document.getElementById("fob").value = fob;
-
-	document.getElementById("tow").value = parseInt(document.getElementById("zfw").value) + fob;
-
-	document.getElementById("lw").value = Math.floor(parseInt(document.getElementById("tow").value) - fltfuel);
 		
-	/*if (fillmode == "fillouter")
-	{			
-		var outfree = 2 * (rwtmax - Math.floor(block / fobmax * rwtmax));
-		if (Math.floor(block / fobmax * ctrmax) >= outfree)
+	var fobmax = sumTanksToFOBMax(0);
+	var fobmaxinner = sumTanksToFOBMax(1);
+	var fobmaxouter = sumTanksToFOBMax(2);
+	var outerFl = 0;
+	var innerFl = 0;
+	
+	if (fillmode == "fillequal")
+	{
+		outerFl = block * fobmaxouter / fobmax;
+		innerFl = block * fobmaxinner / fobmax;
+	}
+	else
+	{
+		if (block > fobmaxouter)
 		{
-			document.getElementById("ctr").value = Math.floor(block / fobmax * ctrmax) - outfree
+			outerFl = fobmaxouter;
+			innerFl = block - fobmaxouter;
 		}
 		else
 		{
-			outfree = Math.floor(block / fobmax * ctrmax);
-			document.getElementById("ctr").value = 0;
+			outerFl = block;			
 		}
-		document.getElementById("rwt").value = Math.floor(block / fobmax * rwtmax + outfree / 2);
-		document.getElementById("lwt").value = Math.floor(block / fobmax * lwtmax + outfree / 2);
-	}*/
+	}
+	
+	for (var i = 0; i < CenteredTanksNames.length; i++)
+	{
+		CenteredTanksValue[i] = innerFl * (CenteredTanksMax[i] / fobmaxinner);
+		document.getElementById(CenteredTanksNames[i]).value = Math.floor(CenteredTanksValue[i]);
+	}
+
+	for (var i = 0; i < WingTanksNames.length; i++)
+	{
+		WingTanksValue[i] = outerFl * (WingTanksMax[i] / fobmaxouter);
+		document.getElementById(WingTanksNames[i]).value = Math.floor(WingTanksValue[i]);
+	}	
+
+	document.getElementById("fob").value = Math.floor(block);
+	document.getElementById("tow").value = parseInt(document.getElementById("zfw").value) + Math.floor(block);
+	document.getElementById("lw").value = Math.floor(parseInt(document.getElementById("tow").value) - fltfuel);
 		
 	/*fuel compartment diagram*/
-	/*
 	profildiagsizex = document.getElementById("svgtank").getBoundingClientRect().width * 0.8;
-	profildiagsizey = Math.floor(profildiagsizex / 3);
-
-	var rwtmax = parseInt(document.getElementById("rwtmax").value);		
-	var ctrmax = parseInt(document.getElementById("ctrmax").value);		
-	document.getElementById("svgtank").innerHTML = "<svg width='" + profildiagsizex + "px' height='60px' id='gendiagtank' class='diag'>";
+	
+	var tankCnt = WingTanksNames.length + CenteredTanksNames.length;
+	var biggestTank = 0;
+	for (var i = 0; i < WingTanksNames.length; i++)
+	{ 
+		if (WingTanksMax[i] > biggestTank) 
+		{ biggestTank = WingTanksMax[i]; }
+	}
+	for (var i = 0; i < CenteredTanksNames.length; i++)
+	{
+		if (CenteredTanksMax[i] > biggestTank) 
+		{ biggestTank = CenteredTanksMax[i]; }
+	}
+	
+	document.getElementById("svgtank").innerHTML = "<svg width='" + profildiagsizex + "px' height='" + (tankCnt * 20) + "px' id='gendiagtank' class='diag'>";
 	document.getElementById("svgtank").innerHTML += "</svg>";
-	document.getElementById("gendiagtank").innerHTML = "<rect x='0' y='0' width='" + rwtmax / ctrmax * profildiagsizex + "px' height='20px'  style='fill:none;stroke:black;stroke-width:1px;'/>";
-	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='20' width='" + ctrmax / ctrmax * profildiagsizex + "px' height='20px'  style='fill:none;stroke:black;stroke-width:1px;' />";
-	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='40' width='" + rwtmax / ctrmax * profildiagsizex + "px' height='20px'  style='fill:none;stroke:black;stroke-width:1px;' />";
-	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='0' width='0' height='20px'  style='fill:lime;stroke:black;stroke-width:1px;'><animate attributeName='width' from='0' to='" + parseFloat(document.getElementById("rwt").value) / ctrmax * profildiagsizex + "px' begin ='0s' dur='.5s' fill='freeze'/></rect>";
-	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='20' width='0' height='20px'  style='fill:lime;stroke:black;stroke-width:1px;'><animate attributeName='width' from='0' to='" + parseFloat(document.getElementById("ctr").value) / ctrmax * profildiagsizex + "px' begin ='.2s' dur='.55s' fill='freeze'/></rect>";
-	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='40' width='0' height='20px'  style='fill:lime;stroke:black;stroke-width:1px;'><animate attributeName='width' from='0' to='" + parseFloat(document.getElementById("lwt").value) / ctrmax * profildiagsizex + "px' begin ='.4s' dur='.6s' fill='freeze'/></rect>";
-	document.getElementById("gendiagtank").innerHTML += 
-		"<text x='0' y='0' class='diagtext' dx='5' dy='12px'>" + 
-		"<tspan>LWT</tspan>" + 
-		"</text>";
-	document.getElementById("gendiagtank").innerHTML += 
-		"<text x='0' y='20' class='diagtext' dx='5' dy='12px'>" + 
-		"<tspan>CTR</tspan>" + 
-		"</text>";
-	document.getElementById("gendiagtank").innerHTML += 
-		"<text x='0' y='40' class='diagtext' dx='5' dy='12px'>" + 
-		"<tspan>RWT</tspan>" + 
-		"</text>";	
-	*/
+	
+	var barCnt = 0;
+	for (var i = 0; i < (WingTanksNames.length - 1) / 2; i++)
+	{
+		drawTankBarInDiag(WingTanksNames[i], barCnt, WingTanksMax[i], WingTanksValue[i], biggestTank, profildiagsizex);
+		
+		barCnt++;
+	}
+	for (var i = 0; i < CenteredTanksNames.length / 2; i++)
+	{
+		drawTankBarInDiag(CenteredTanksNames[i], barCnt, CenteredTanksMax[i], CenteredTanksValue[i], biggestTank, profildiagsizex);
+		
+		barCnt++;
+	}
+	for (var i = WingTanksNames.length / 2; i < WingTanksNames.length; i++)
+	{
+		drawTankBarInDiag(WingTanksNames[i], barCnt, WingTanksMax[i], WingTanksValue[i], biggestTank, profildiagsizex);
+		
+		barCnt++;
+	}
+	
 	calcKgAll();
 
 	checkErr();
+}
+
+function drawTankBarInDiag(tankname, barCnt, tankmax, tankvalue, biggestTank, profildiagsizex)
+{
+	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='" + (barCnt * 20) + "' width='" + tankmax / biggestTank * profildiagsizex + "px' height='20px'  style='fill:none;stroke:black;stroke-width:1px;'/>";
+	document.getElementById("gendiagtank").innerHTML += "<rect x='0' y='" + (barCnt * 20) + "' width='0' height='20px'  style='fill:lime;stroke:black;stroke-width:1px;'><animate attributeName='width' from='0' to='" + tankvalue / biggestTank * profildiagsizex + "px' begin ='0s' dur='.5s' fill='freeze'/></rect>";
+	
+	document.getElementById("gendiagtank").innerHTML += 
+	"<text x='0' y='" + (barCnt * 20) + "' class='diagtext' dx='5' dy='12px'>" + 
+	"<tspan>" + tankname + "</tspan>" + 
+	"</text>";
+}
+
+function sumTanksToFOBMax(group)
+{
+	var fobmaxouter = 0;
+	var fobmaxinner = 0;
+	for (var i = 0; i < WingTanksMax.length; i ++)
+	{ fobmaxouter += WingTanksMax[i]; }
+	for (var i = 0; i < CenteredTanksMax.length; i ++)
+	{ fobmaxinner += CenteredTanksMax[i]; }
+	
+	if (group == 1) { return fobmaxinner; }
+	if (group == 2) { return fobmaxouter; }
+	
+	return fobmaxinner + fobmaxouter;
 }
 
 function calcFuel()
@@ -532,7 +610,7 @@ function calcFuel()
 	document.getElementById("gendiagfuel").innerHTML += "<circle cx='200' cy='29' r='5' stroke-width='2' fill='yellow' /><text x='220' y='32' class='diagtext'><tspan>Taxi</tspan></text>";
 	
 	document.getElementById("gendiagfuel").innerHTML += "<circle cx='10' cy='49' r='5' stroke-width='2' fill='orange' /><text x='20' y='52' class='diagtext'><tspan>Alt & Hold</tspan></text>";
-	document.getElementById("gendiagfuel").innerHTML += "<circle cx='100' cy='49' r='5' stroke-width='2' fill='magenty' /><text x='120' y='52' class='diagtext'><tspan>Additional</tspan></text>";
+	document.getElementById("gendiagfuel").innerHTML += "<circle cx='100' cy='49' r='5' stroke-width='2' fill='magenta' /><text x='120' y='52' class='diagtext'><tspan>Additional</tspan></text>";
 	document.getElementById("gendiagfuel").innerHTML += "<circle cx='200' cy='49' r='5' stroke-width='2' fill='red' /><text x='220' y='52' class='diagtext'><tspan>Over MLW</tspan></text>";
 
 	var vl = (fltfuel + parseFloat(document.getElementById("outresfuel").innerHTML) + parseFloat(document.getElementById("taxifl").value) + parseFloat(document.getElementById("outconti").innerHTML)) / maxfob * profildiagsizex;
@@ -580,14 +658,14 @@ function getHHMM(val)
 
 function checkErr()
 {
-	var checkFields = ["lwt", "rwt", "ctr", "fob", "tow", "lw"];
+	var checkFields = ["fob", "tow", "lw"];
 	for (i = 0; i < checkFields.length; i++)
-	{
+	{		
 		if (parseInt(document.getElementById(checkFields[i]).value) > parseInt(document.getElementById(checkFields[i] + "max").value))
-		{
+		{			
 			document.getElementById(checkFields[i]).classList.add("error");
 				
-			if (checkFields[i] == "lwt" || checkFields[i] == "rwt" || checkFields[i] == "ctr" || checkFields[i] == "fob")
+			if (checkFields[i] == "fob")
 			{	
 				document.getElementById("exceedfuellimit").classList.remove("xboxhidden");
 			}				
@@ -603,7 +681,7 @@ function checkErr()
 		else
 		{
 			document.getElementById(checkFields[i]).classList.remove("error");
-			if (checkFields[i] == "lwt" || checkFields[i] == "rwt" || checkFields[i] == "ctr" || checkFields[i] == "fob" )
+			if (checkFields[i] == "fob" )
 			{
 				document.getElementById("exceedfuellimit").classList.add("xboxhidden");
 			}
