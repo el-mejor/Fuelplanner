@@ -313,7 +313,7 @@ function calcWeightsEx()
 		
 		barCnt++;
 	}
-	for (var i = 0; i < CenteredTanksNames.length / 2; i++)
+	for (var i = 0; i < CenteredTanksNames.length; i++)
 	{
 		drawTankBarInDiag(CenteredTanksNames[i], barCnt, CenteredTanksMax[i], CenteredTanksValue[i], biggestTank, profildiagsizex);
 		
