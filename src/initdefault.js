@@ -16,13 +16,18 @@ document.getElementById("paxweight").value = 82; /*weight of one pax in kg*/
 document.getElementById("fwdcrg").value = 3306; /*default cargo in the forward cargo bay*/
 document.getElementById("aftcrg").value = 3306; /*default cargo in the aft cargo bay*/
 
-document.getElementById("rwt").value = 0; /*initialy the tanks must be empty!*/
-document.getElementById("lwt").value = 0; /*initialy the tanks must be  empty!*/
-document.getElementById("ctr").value = 0; /*initialy the tanks must be  empty!*/
-document.getElementById("rwtmax").value = 13914; /*max fuel in the right wing tank*/
-document.getElementById("lwtmax").value = 13914; /*max fuel in the left wing tank*/
-document.getElementById("ctrmax").value = 14281; /*max fuel in the center tank*/
-document.getElementById("fobmax").value = 42109; /*max fuel at all*/
+var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; /* crew, pax, fwdcrf, aftcrg */
+
+/* Fuel compartments */
+var WingTanksNames = [ "RightWT", "LeftWT" ]; /* Names of the stations */
+var WingTanksNodes = [ "consumables/fuel/tank[0]/level-lbs", "consumables/fuel/tank[2]/level-lbs" ]; /* FGFS properties of the stations */
+var WingTanksValue = [ 0, 0 ]; /* as many zeros as stations there are */
+var WingTanksMax = [ 13914, 13914]; /* maximum lbs of the station */
+
+var CenteredTanksNames = [ "CtrT" ]; /* Names of the stations */
+var CenteredTanksNodes = [ "consumables/fuel/tank[1]/level-lbs" ]; /* FGFS properties of the stations */
+var CenteredTanksValue = [ 0 ]; /* as many zeros as stations there are */
+var CenteredTanksMax = [ 14281 ]; /* maximum lbs of the station */
 
 document.getElementById("towmax").value = 169756; /*maximum take off weight*/
 document.getElementById("lwmax").value = 142198; /*maximum landing weight*/
@@ -52,9 +57,7 @@ document.getElementById("setPayloadBtn").addEventListener("click", setPayloadBtn
 function setPayloadBtnClick()
 {
 	if (checkIfLoadingIsPossible())
-	{
-		var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; 
-		
+	{	
 		FGSetValue(nodesPayload[0], document.getElementById("crew").value);
 		FGSetValue(nodesPayload[1], document.getElementById("pax").value);
 		FGSetValue(nodesPayload[2], document.getElementById("fwdcrg").value);
@@ -66,11 +69,15 @@ function setFuelBtnClick()
 {
 	if (checkIfLoadingIsPossible())
 	{
-		var nodesFuel = [ "consumables/fuel/tank[0]/level-lbs", "consumables/fuel/tank[1]/level-lbs", "consumables/fuel/tank[2]/level-lbs" ];
-
-		FGSetValue(nodesFuel[0], document.getElementById("rwt").value);
-		FGSetValue(nodesFuel[1], document.getElementById("ctr").value);
-		FGSetValue(nodesFuel[2], document.getElementById("lwt").value);
+		for (var i = 0; i < WingTanksNames.length; i++)
+		{
+			FGSetValue(WingTanksNodes[i], WingTanksValue[i]);
+		}
+		
+		for (var i = 0; i < WingTanksNames.length; i++)
+		{
+			FGSetValue(CenteredTanksNodes[i], CenteredTanksValue[i]);
+		}
 	}
 }
 
@@ -83,7 +90,7 @@ function checkIfLoadingIsPossible()
 		return false;
 	}
 	
-	/* here a propper value should be checked to ensure that the acft can be refuelled, e.g. e.g. if the engines are off */
+	/* here a propper value should be checked to ensure that the acft can be refuelled, e.g. if the engines are off or on ground */
 	
 	if (confirm("Are you sure to send the values to FGFS now?"))
 	{
