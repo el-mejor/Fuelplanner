@@ -34,8 +34,8 @@ document.getElementById("lwmax").value = 142198; /*maximum landing weight*/
 
 document.getElementById("gs360").value = 440; /*groundspeed on FL360*/
 document.getElementById("gs100").value = 260; /*groundspeed on FL100*/
-document.getElementById("fb360").value = 3000; /*fuel consumption on FL360 with an aircraft that has 10000 lbs more than the empty weight (e.g. 10000 lbs of fuel and no pax/cargo)*/
-document.getElementById("fb360x").value = 4200; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
+document.getElementById("fb360").value = 3700; /*fuel consumption on FL360 with an aircraft that has 10000 lbs more than the empty weight (e.g. 10000 lbs of fuel and no pax/cargo)*/
+document.getElementById("fb360x").value = 5000; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
 document.getElementById("clb").value = 2500; /*average climb rate*/
 document.getElementById("des").value = 2000; /*average descent rate*/
 document.getElementById("maxpax").value = 150; /*max pax on board*/
