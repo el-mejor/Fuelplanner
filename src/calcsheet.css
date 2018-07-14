@@ -178,8 +178,8 @@ img.arr {
 
 .divcol {
 	position: relative;
-    flex: 1 1 auto;
-	-webkit-flex:  1 1 auto;
+    flex: 1; /* 1 auto;*/
+	-webkit-flex:  1; /* 1 auto;*/
 	min-width: 320px;
 	max-width: 100%;
     margin: 10px;	
@@ -187,8 +187,8 @@ img.arr {
 
 .rtedivcol {
 	position: relative;
-    flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
+    flex: 1; /* 1 auto;*/
+	-webkit-flex: 1; /* 1 auto;*/
 	min-width: 300px;
 	max-width: 100%;
     margin: 10px;	
@@ -224,10 +224,14 @@ img.arr {
 
 .tabgen {
     width:              90%;
-    margin:             auto;
+    margin:           	auto;
 	margin-top:			10px;
-	margin-bottom:			10px;
+	margin-bottom:		10px;
 	border-spacing:		0;
+}
+
+table.calcsheet {
+	width:				80% !important;
 }
 
 table.calcsheet td, table.calcsheet th {
