@@ -13,10 +13,14 @@ document.getElementById("ew").value = 82078; /*the aircrafts empty weight */
 document.getElementById("crew").value = 380; /*the weight of the crew*/
 document.getElementById("paxcnt").value = 150; /*default value of pax on board*/
 document.getElementById("paxweight").value = 82; /*weight of one pax in kg*/
-document.getElementById("fwdcrg").value = 3306; /*default cargo in the forward cargo bay*/
-document.getElementById("aftcrg").value = 3306; /*default cargo in the aft cargo bay*/
 
 var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; /* crew, pax, fwdcrf, aftcrg */
+
+/* Cargo bays */
+var CargoBaysNames = ["FwdCrg", "AftCrg"];
+var CargoBaysNodes = [ "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; 
+var CargoBaysValues = [ 3306,3306 ];
+var CargoBaysMaxLoad = [ 8765, 8765 ];
 
 /* Fuel compartments */
 var WingTanksNames = [ "RightWT", "LeftWT" ]; /* Names of the stations */
@@ -46,7 +50,7 @@ document.getElementById("crsalt2").value = 36000; /*default value for flightleve
 document.getElementById("crsalt3").value = 36000; /*default value for flightlevel of 3rd segment */
 document.getElementById("origalt").value = 1000; /*default value for height of origin airport*/
 document.getElementById("destalt").value = 1000; /*default value for height of destination airport*/
-document.getElementById("contiperc").value = 5; /*default value for contigency fuel percent*/
+document.getElementById("contiperc").value = 10; /*default value for contigency fuel percent*/
 document.getElementById("taxifl").value = 2200; /*default value for taxi fuel*/
 document.getElementById("resflmin").value = 75; /*default value for time to reach alternate airport, holding and go around*/
 document.getElementById("addfl").value = 0; /*default value for additional fuel*/

@@ -1,4 +1,7 @@
-var vals = ["ew", "crew", "pax", "fwdcrg", "aftcrg", "fob", "fobmax", "towmax", "lwmax", "tow", "lw", "zfw", "fb360", "fb360x"];
+initCargoBayStations()
+initFuelCompartments();
+
+var vals = ["ew", "crew", "pax", "fob", "fobmax", "towmax", "lwmax", "tow", "lw", "zfw", "fb360", "fb360x"];
 var valstab = ["clbfuel", "crs1fuel", "crs2fuel", "crs3fuel", "crs11fuel", "crs22fuel", "crs33fuel", "todfuel", "fltfuel", "outconti", "outtaxi", "outresfuel", "outadd", "blockfuel"];
 var lbskg = 0.453592;
 	
@@ -63,9 +66,22 @@ for (i = 0; i < objs.length; i++)
 	objs[i].disabled = true;
 }	
 
-initFuelCompartments();
-
 calcWeights();
+
+function initCargoBayStations()
+{	
+	var cargoTable = document.getElementById("cargostations");
+	
+	for (var i = 0; i < CargoBaysNames.length; i++)
+	{
+		cargoTable.innerHTML += `<tr><td>${CargoBaysNames[i]}:</td><td> <input type="number" id="${CargoBaysNames[i]}" class="usrval">lbs</td><td> <input type="number" id="${CargoBaysNames[i]}kg" class="statval">kg</td></tr>`
+	}
+	
+	for (var i = 0; i < CargoBaysNames.length; i ++)
+	{ 		
+		document.getElementById(CargoBaysNames[i]).value = CargoBaysValues[i];
+	}
+}
 
 function initFuelCompartments()
 {
@@ -152,9 +168,12 @@ function endEnter()
 function setPax(cnt)
 {
 	document.getElementById("paxcnt").value = cnt;
-	document.getElementById("fwdcrg").value = Math.floor(cnt * 20 / lbskg / 2);
-	document.getElementById("aftcrg").value = Math.floor(cnt * 20 / lbskg / 2);	
 		
+	for (var i = 0; i < CargoBaysNames.length; i ++)
+	{ 		
+		document.getElementById(CargoBaysNames[i]).value = Math.floor(cnt * 20 / lbskg / CargoBaysNames.length);
+	}	
+	
 	calcWeights();
 }
 	
@@ -201,6 +220,11 @@ function calcKgAll ()
 		calcKg(CenteredTanksNames[i]);
 		calcKg(CenteredTanksNames[i] + "max");
 	}
+	
+	for (i = 0; i < CargoBaysNames.length; i++)
+	{
+		calcKg(CargoBaysNames[i]);
+	}
 
 	for (i = 0; i < valstab.length; i++)
 	{
@@ -239,10 +263,15 @@ function calcWeightsEx()
 		
     zfw = parseInt(document.getElementById("ew").value) + 
 		    parseInt(document.getElementById("crew").value) + 
-		    parseInt(document.getElementById("pax").value) + 
-		    parseInt(document.getElementById("fwdcrg").value) + 
-		    parseInt(document.getElementById("aftcrg").value);		
+		    parseInt(document.getElementById("pax").value);
 
+	for (var i = 0; i < CargoBaysNames.length; i ++)
+	{ 		
+		zfw += parseInt(document.getElementById(CargoBaysNames[i]).value);
+	}
+
+	console.log(zfw);
+	
 	document.getElementById("zfw").value = zfw;
 
     calcFuel();
