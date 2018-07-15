@@ -11,16 +11,22 @@ document.getElementById("initdata").innerHTML = "IDG A33X by it0uchpods Design G
 document.getElementById("ew").value = 224000; /*the aircrafts empty weight */
 
 document.getElementById("crew").value = 380; /*the weight of the crew*/
-document.getElementById("paxcnt").value = 253; /*default value of pax on board*/
+document.getElementById("paxcnt").value = 0; /*default value of pax on board*/
 document.getElementById("paxweight").value = 73; /*weight of one pax in kg*/
 
 var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb" ]; /* crew, pax */
 
+/* Hide Paxes for Freight Variant - comment out for passenger variants */
+document.getElementById("paxcnt").style.display = "none";
+document.getElementById("paxweight").style.display = "none";
+document.getElementById("pax").style.display = "none";
+document.getElementById("paxkg").style.display = "none";
+
 /* Cargo bays */
-var CargoBaysNames = ["FwdCrg", "AftCrg", "RrBulkCrg"];
-var CargoBaysNodes = [ "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb", "payload/weight[4]/weight-lb"  ]; 
-var CargoBaysValues = [ 300, 300, 300 ];
-var CargoBaysMaxLoad = [ 13200, 13200, 11880 ];
+var CargoBaysNames = [ "Upper", "FwdCrg", "AftCrg", "RrBulkCrg" ];
+var CargoBaysNodes = [ "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb", "payload/weight[4]/weight-lb"  ]; 
+var CargoBaysValues = [ 300, 300, 300, 300 ];
+var CargoBaysMaxLoad = [ 41000, 13200, 13200, 11880 ];
 
 /* Fuel compartments */
 var WingTanksNames = [ "RightWT", "LeftWT" ]; /* Names of the stations */
@@ -42,7 +48,7 @@ document.getElementById("fb360").value = 7600; /*fuel consumption on FL360 with 
 document.getElementById("fb360x").value = 9500; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
 document.getElementById("clb").value = 2500; /*average climb rate*/
 document.getElementById("des").value = 2000; /*average descent rate*/
-document.getElementById("maxpax").value = 253; /*max pax on board*/
+document.getElementById("maxpax").value = 0; /*max pax on board*/
 
 document.getElementById("dist").value = 1500; /*default value for distance*/
 document.getElementById("crsalt1").value = 36000; /*default value for flightlevel of 1st segment */

@@ -16,6 +16,12 @@ document.getElementById("paxweight").value = 73; /*weight of one pax in kg*/
 
 var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb" ]; /* crew, pax */
 
+/* Hide Paxes for Freight Variant - comment out for passenger variants */
+/*document.getElementById("paxcnt").style.display = "none";
+document.getElementById("paxweight").style.display = "none";
+document.getElementById("pax").style.display = "none";
+document.getElementById("paxkg").style.display = "none";*/
+
 /* Cargo bays */
 var CargoBaysNames = ["FwdCrg", "AftCrg"];
 var CargoBaysNodes = [ "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; 
