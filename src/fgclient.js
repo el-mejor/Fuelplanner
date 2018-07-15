@@ -182,7 +182,10 @@ function setPayloadBtnClick()
 	if (checkIfLoadingIsPossible())
 	{	
 		FGSetValue(nodesPayload[0], document.getElementById("crew").value);
-		FGSetValue(nodesPayload[1], document.getElementById("pax").value);
+		if (document.getElementById("maxpax").value == 0)
+		{
+			FGSetValue(nodesPayload[1], document.getElementById("pax").value);
+		}
 		
 		for (var i = 0; i < CargoBaysNames.length; i++)
 		{

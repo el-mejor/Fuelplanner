@@ -70,6 +70,13 @@ calcWeights();
 
 function initCargoBayStations()
 {	
+	/* Hide Paxes for Freight Variant - comment out for passenger variants */
+	if (document.getElementById("maxpax").value == 0)
+	{
+		document.getElementById("paxcnt").parentElement.parentElement.style.display = "none";
+		document.getElementById("pax").parentElement.parentElement.style.display = "none";
+	}
+
 	var cargoTable = document.getElementById("cargostations");
 	
 	for (var i = 0; i < CargoBaysNames.length; i++)
