@@ -177,4 +177,53 @@ function GETPropertyValue(key)
 	return FGFSProperties.properties[key];
 }
 
+function setPayloadBtnClick()
+{
+	if (checkIfLoadingIsPossible())
+	{	
+		FGSetValue(nodesPayload[0], document.getElementById("crew").value);
+		FGSetValue(nodesPayload[1], document.getElementById("pax").value);
+		
+		for (var i = 0; i < CargoBaysNames.length; i++)
+		{
+			FGSetValue(CargoBaysNodes[i], document.getElementById(CargoBaysNames[i]).value);
+		}
+	}
+}
+
+function setFuelBtnClick()
+{
+	if (checkIfLoadingIsPossible())
+	{
+		for (var i = 0; i < WingTanksNames.length; i++)
+		{
+			FGSetValue(WingTanksNodes[i], WingTanksValue[i]);
+		}
+		
+		for (var i = 0; i < WingTanksNames.length; i++)
+		{
+			FGSetValue(CenteredTanksNodes[i], CenteredTanksValue[i]);
+		}
+	}
+}
+
+function checkIfLoadingIsPossible()
+{
+	if (!FGFSConnected)
+	{
+		closedhint.innerHTML = "NOT CONNECTED TO FGFS.";		
+		closedhint.classList.remove("xboxhidden");
+		return false;
+	}
+	
+	/* here a propper value should be checked to ensure that the acft can be refuelled, e.g. if the engines are off or on ground */
+	
+	if (confirm("Are you sure to send the values to FGFS now?"))
+	{
+		return true;
+	}		
+	
+	return false;	
+}
+
 

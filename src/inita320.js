@@ -11,10 +11,10 @@ document.getElementById("initdata").innerHTML = "IDG A32X by it0uchpods Design G
 document.getElementById("ew").value = 82078; /*the aircrafts empty weight */
 
 document.getElementById("crew").value = 380; /*the weight of the crew*/
-document.getElementById("paxcnt").value = 150; /*default value of pax on board*/
-document.getElementById("paxweight").value = 82; /*weight of one pax in kg*/
+document.getElementById("paxcnt").value = 168; /*default value of pax on board*/
+document.getElementById("paxweight").value = 73; /*weight of one pax in kg*/
 
-var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; /* crew, pax, fwdcrf, aftcrg */
+var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb" ]; /* crew, pax */
 
 /* Cargo bays */
 var CargoBaysNames = ["FwdCrg", "AftCrg"];
@@ -42,7 +42,7 @@ document.getElementById("fb360").value = 3700; /*fuel consumption on FL360 with 
 document.getElementById("fb360x").value = 5000; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
 document.getElementById("clb").value = 2500; /*average climb rate*/
 document.getElementById("des").value = 2000; /*average descent rate*/
-document.getElementById("maxpax").value = 150; /*max pax on board*/
+document.getElementById("maxpax").value = 168; /*max pax on board*/
 
 document.getElementById("dist").value = 500; /*default value for distance*/
 document.getElementById("crsalt1").value = 36000; /*default value for flightlevel of 1st segment */
@@ -57,49 +57,3 @@ document.getElementById("addfl").value = 0; /*default value for additional fuel*
 
 document.getElementById("setFuelBtn").addEventListener("click", setFuelBtnClick);
 document.getElementById("setPayloadBtn").addEventListener("click", setPayloadBtnClick);
-
-function setPayloadBtnClick()
-{
-	if (checkIfLoadingIsPossible())
-	{	
-		FGSetValue(nodesPayload[0], document.getElementById("crew").value);
-		FGSetValue(nodesPayload[1], document.getElementById("pax").value);
-		FGSetValue(nodesPayload[2], document.getElementById("fwdcrg").value);
-		FGSetValue(nodesPayload[3], document.getElementById("aftcrg").value);
-	}
-}
-
-function setFuelBtnClick()
-{
-	if (checkIfLoadingIsPossible())
-	{
-		for (var i = 0; i < WingTanksNames.length; i++)
-		{
-			FGSetValue(WingTanksNodes[i], WingTanksValue[i]);
-		}
-		
-		for (var i = 0; i < WingTanksNames.length; i++)
-		{
-			FGSetValue(CenteredTanksNodes[i], CenteredTanksValue[i]);
-		}
-	}
-}
-
-function checkIfLoadingIsPossible()
-{
-	if (!FGFSConnected)
-	{
-		closedhint.innerHTML = "NOT CONNECTED TO FGFS.";		
-		closedhint.classList.remove("xboxhidden");
-		return false;
-	}
-	
-	/* here a propper value should be checked to ensure that the acft can be refuelled, e.g. if the engines are off or on ground */
-	
-	if (confirm("Are you sure to send the values to FGFS now?"))
-	{
-		return true;
-	}		
-	
-	return false;	
-}

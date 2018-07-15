@@ -171,7 +171,7 @@ function setPax(cnt)
 		
 	for (var i = 0; i < CargoBaysNames.length; i ++)
 	{ 		
-		document.getElementById(CargoBaysNames[i]).value = Math.floor(cnt * 20 / lbskg / CargoBaysNames.length);
+		document.getElementById(CargoBaysNames[i]).value = Math.floor(cnt * 30 / lbskg / CargoBaysNames.length);
 	}	
 	
 	calcWeights();
