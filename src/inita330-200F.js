@@ -19,7 +19,7 @@ document.getElementById("paxweight").value = 73; /*weight of one pax in kg*/
 var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb" ]; /* crew, pax */
 
 /* Cargo bays */
-var CargoBaysNames = [ "Upper", "FwdCrg", "AftCrg", "RrBulkCrg" ];
+var CargoBaysNames = [ "MainDeck", "FwdCrg", "AftCrg", "RrBulkCrg" ];
 var CargoBaysNodes = [ "payload/weight[1]/weight-lb", "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb", "payload/weight[4]/weight-lb"  ]; 
 var CargoBaysValues = [ 300, 300, 300, 300 ];
 var CargoBaysMaxLoad = [ 41000, 13200, 13200, 11880 ];
@@ -41,7 +41,7 @@ document.getElementById("lwmax").value = 412264; /*maximum landing weight*/
 document.getElementById("gs360").value = 440; /*groundspeed on FL360*/
 document.getElementById("gs100").value = 260; /*groundspeed on FL100*/
 document.getElementById("fb360").value = 7600; /*fuel consumption on FL360 with an aircraft that has 10000 lbs more than the empty weight (e.g. 10000 lbs of fuel and no pax/cargo)*/
-document.getElementById("fb360x").value = 9500; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
+document.getElementById("fb360x").value = 9200; /*fuel consumption on FL360 with an aircraft that has 40000 lbs more than the empty weight (e.g. 10000 lbs of fuel and 30000 lbs pax/cargo) - you may interpolate this value if you know other fuel consumption/weight combi!*/
 document.getElementById("clb").value = 2500; /*average climb rate*/
 document.getElementById("des").value = 2000; /*average descent rate*/
 
