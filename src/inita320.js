@@ -8,12 +8,12 @@ document.getElementById("fgfswsport").value = "80"; /*FGFS PORT*/
 
 document.getElementById("initdata").innerHTML = "IDG A32X by it0uchpods Design Group<br/><a href='https://github.com/it0uchpods/IDG-A32X' target='_blank'>https://github.com/it0uchpods/IDG-A32X</a>";
 
-document.getElementById("ew").value = 82078; /*the aircrafts empty weight */
+document.getElementById("ew").value = 80431; /*the aircrafts empty weight */
 
 document.getElementById("crew").value = 380; /*the weight of the crew*/
 
-document.getElementById("maxpax").value = 168; /*max pax on board*/
-document.getElementById("paxcnt").value = 168; /*default value of pax on board*/
+document.getElementById("maxpax").value = 151; /*max pax on board*/
+document.getElementById("paxcnt").value = 151; /*default value of pax on board*/
 document.getElementById("paxweight").value = 73; /*weight of one pax in kg*/
 
 var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb" ]; /* crew, pax */
@@ -22,7 +22,7 @@ var nodesPayload = [ "payload/weight[0]/weight-lb", "payload/weight[1]/weight-lb
 var CargoBaysNames = ["FwdCrg", "AftCrg"];
 var CargoBaysNodes = [ "payload/weight[2]/weight-lb", "payload/weight[3]/weight-lb" ]; 
 var CargoBaysValues = [ 3306,3306 ];
-var CargoBaysMaxLoad = [ 8765, 8765 ];
+var CargoBaysMaxLoad = [ 9400, 9400 ];
 
 /* Fuel compartments */
 var WingTanksNames = [ "RightWT", "LeftWT" ]; /* Names of the stations */
